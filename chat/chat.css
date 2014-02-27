@@ -42,6 +42,10 @@ ul {
 	margin-top: 30px;
 }
 
+.user.me {
+	font-weight: bold;
+}
+
 #chat_container {
 	position: relative;
 
