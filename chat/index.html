@@ -4,8 +4,6 @@
 
 	<title>CyHack Firebase Demo</title>
 
-	<script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.6/firebase.js'></script>
-
 	<!-- Javascript Libraries (underscore, jQuery, handlebars) -->
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -16,8 +14,6 @@
 	<link rel="stylesheet" href="chat.css" />
 	
 	<script type="text/javascript">
-	var firebase_root = new Firebase('https://cyhack.firebaseio.com/chat/default');
-	
 	var message;
 	var uid;
 	
@@ -33,30 +29,14 @@
 		
 		// Ask the user for their name
 		uid = prompt('What is your name?');
-		addUser(uid);
-		
-		// Display names of all logged in users
-		firebase_root.child('users').on('child_added', function(snapshot) {
-			displayUser(snapshot.val().name);
-		});
-		
-		// Remove names when users log out
-		firebase_root.child('users').on('child_removed', function(snapshot) {
-			removeUser(snapshot.val().name);
-		});
-		
-		// Display messages as they are added
-		firebase_root.child('messages').on('child_added', function(snapshot) {
-			var val = snapshot.val();
-			displayMessage(val.user, val.message);
-		});
+		displayUser(uid);
 		
 		// When a message is submitted
 		$('#chat_form').submit(function(e) {
 			e.preventDefault();
 			
 			var input = $('#chat_input').val();
-			storeMessage(uid, input);
+			displayMessage(uid, input);
 			
 			$('#chat_input').val('').focus();;
 			
@@ -67,14 +47,6 @@
 		$('#chat_input').focus();
 	});
 	/******************************************/
-	
-	// Store a message in firebase
-	function storeMessage(from, content) {
-		firebase_root.child('messages').push({
-			user: from,
-			message: content
-		});
-	}
 	
 	// Renders a message to the screen
 	function displayMessage(from, content) {
@@ -88,15 +60,6 @@
 		$('#chat_content').stop().animate({
 			scrollTop: $('#chat_content').prop('scrollHeight')
 		}, 250);
-	}
-	
-	// Add a user to Firebase
-	function addUser(id) {
-		var user_ref = firebase_root.child('users').push({
-			name: id
-		});
-		
-		user_ref.onDisconnect().remove();
 	}
 	
 	// Renders a user to the users online list
