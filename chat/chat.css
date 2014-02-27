@@ -1,0 +1,115 @@
+body {
+	padding: 10px;
+}
+
+h1 {
+	margin: 0 10px 10px;
+}
+
+form {
+	margin: 0;
+}
+
+ul {
+	padding-left: 15px;
+}
+
+#user_container {
+	float: right;
+	position: relative;
+	
+	width: 150px;
+	height: calc(100% - 200px);
+	
+	border: 1px solid black;
+	
+	padding: 10px;
+}
+
+#user_container:before {
+	content: 'Users Online';
+	position: absolute;
+	padding: 5px;
+	top: 0;
+	left: 0;
+	background-color: #CCC;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+}
+
+#user_list {
+	margin-top: 30px;
+}
+
+#chat_container {
+	position: relative;
+
+	width: calc(100% - 165px);
+	height: calc(100% - 200px);
+
+	margin: 5px;
+	
+	border: 1px solid black;
+	
+	padding: 10px;
+}
+
+#chat_content {
+	max-height: calc( 100% - 35px );
+	overflow: auto;
+	position: relative;
+	white-space: nowrap;
+}
+
+.height_hack {
+	display: inline-block;
+	height: calc( 100% - 40px );
+}
+
+#message_container {
+	display: inline-block;
+	vertical-align: bottom;
+	max-height: calc( 100% - 40px );
+	width: calc(100% - 5px);
+	white-space: normal;
+}
+
+.message {
+	padding: 0 5px;
+	display: inline-block;
+	vertical-align: bottom;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.message:nth-child(odd) {
+	background-color: #EEE;
+}
+
+.message .sender {
+	display: inline-block;
+}
+
+.message .sender:after {
+	content: ':';
+}
+
+.message .content {
+	display: inline-block;
+}
+
+#input_container {
+	padding: 5px 0;
+	background-color: #CCC;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+#chat_input {
+	width: calc(100% - 70px);
+}

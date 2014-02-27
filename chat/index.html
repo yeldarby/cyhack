@@ -1,0 +1,109 @@
+<html>
+
+<head>
+
+	<title>CyHack Firebase Demo</title>
+
+	<!-- Javascript Libraries (underscore, jQuery, handlebars) -->
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+	
+	<!-- CSS (bootstrap, site-specific) -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="chat.css" />
+	
+	<script type="text/javascript">
+	var message;
+	var uid = 'You';
+	
+	/******************************************/
+	// When page is ready
+	$(function() {
+		// Compile Handlebars Templates
+		message = Handlebars.compile( $('#message-template').html() );
+		user = Handlebars.compile( $('#user-template').html() )
+		
+		// Add a welcome message
+		displayMessage('CyHack', 'Welcome to the intro to Firebase talk!');
+		addUser(uid);
+		
+		// When a message is submitted
+		$('#chat_form').submit(function(e) {
+			e.preventDefault();
+			
+			var input = $('#chat_input').val();
+			displayMessage(uid, input);
+			
+			$('#chat_input').val('').focus();;
+			
+			return false;
+		});
+		
+		// Focus our textfield for convenience
+		$('#chat_input').focus();
+	});
+	/******************************************/
+	
+	// Renders a message to the screen
+	function displayMessage(from, content) {
+		var html = message({
+			sender: from,
+			message: content
+		});
+		
+		$('#message_container').append(html);
+		
+		$('#chat_content').stop().animate({
+			scrollTop: $('#chat_content').prop('scrollHeight')
+		}, 250);
+	}
+	
+	// Renders a user to the users online list
+	function addUser(id) {
+		var html = user({
+			user: id
+		});
+		
+		$('#user_list').append(html);
+	}
+	</script>
+</head>
+
+<body>
+
+	<h1>CyHack Chatroom</h1>
+	
+	<div id="user_container">
+		<ul id="user_list"></ul>	
+	</div>
+	
+	<div id="chat_container">
+		<div id="chat_content">
+			<div class="height_hack"></div>
+			<div id="message_container"></div>
+			
+		</div>
+		
+		<div id="input_container">
+			<form id="chat_form">
+				<input type="text" id="chat_input" />
+				<input type="submit" value="Send" />
+			</form>
+		</div>
+	</div>
+	
+	<script id="message-template" type="text/x-handlebars-template">
+		<div class="message">
+			<div class="sender">{{sender}}</div>
+			<div class="content">{{message}}</div>
+		</div>
+	</script>
+	
+	<script id="user-template" type="text/x-handlebars-template">
+		<li>{{user}}</li>
+	</script>
+	
+</body>
+
+</html>
